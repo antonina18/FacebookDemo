@@ -1,4 +1,4 @@
-package ksowka.demo;
+package ksowka.demo.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

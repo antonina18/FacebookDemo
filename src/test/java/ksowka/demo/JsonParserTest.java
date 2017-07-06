@@ -1,5 +1,7 @@
 package ksowka.demo;
 
+import ksowka.demo.models.Facebook;
+import ksowka.demo.utils.JsonParser;
 import org.junit.Test;
 
 import java.io.IOException;

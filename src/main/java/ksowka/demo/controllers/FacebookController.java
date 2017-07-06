@@ -1,7 +1,8 @@
 package ksowka.demo.controllers;
 
-import ksowka.demo.Facebook;
+import ksowka.demo.models.Facebook;
 import ksowka.demo.services.FacebookService;
+import ksowka.demo.utils.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,8 +22,7 @@ public class FacebookController {
     }
 
     @GetMapping(value = "/{id}")
-    public Facebook findById(@PathVariable String id) throws IOException {
-            //throws NotFoundException {
+    public Facebook findById(@PathVariable String id) throws IOException, NotFoundException {
         return facebookService.findById(id);
     }
 

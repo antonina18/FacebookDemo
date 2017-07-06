@@ -1,4 +1,4 @@
-package ksowka.demo;
+package ksowka.demo.utils;
 
 import org.springframework.stereotype.Component;
 

@@ -1,9 +1,9 @@
 package ksowka.demo.commons;
 
-import ksowka.demo.City;
-import ksowka.demo.Coords;
-import ksowka.demo.Facebook;
-import ksowka.demo.Gender;
+import ksowka.demo.models.City;
+import ksowka.demo.models.Coords;
+import ksowka.demo.models.Facebook;
+import ksowka.demo.models.Gender;
 
 import java.sql.Timestamp;
 import java.util.*;
