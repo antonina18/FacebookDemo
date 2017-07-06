@@ -14,13 +14,7 @@ import static ksowka.demo.utils.JsonParser.toFacebook;
 
 @Component
 public class JsonData {
-
-    private final FilesUtil filesUtil;
     private final List<Facebook> data = new ArrayList<>();
-
-    public JsonData(FilesUtil filesUtil) {
-        this.filesUtil = filesUtil;
-    }
 
     @PostConstruct
     public void init() {

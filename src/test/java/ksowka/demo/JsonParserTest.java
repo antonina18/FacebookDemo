@@ -22,7 +22,7 @@ public class JsonParserTest {
         Facebook expected = facebookComplex();
 
         //when
-        final Facebook actual = jsonParser.toFacebook2(FACEBOOK_SIMPLE_AS_STRING);
+        final Facebook actual = jsonParser.toFacebook(FACEBOOK_SIMPLE_AS_STRING);
 
         //then
         assertThat(actual, is(notNullValue()));

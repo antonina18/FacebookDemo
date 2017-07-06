@@ -1,49 +1,55 @@
 package ksowka.demo.services;
 
-import com.google.gson.Gson;
-import ksowka.demo.Facebook;
-import ksowka.demo.FilesUtil;
-import ksowka.demo.JsonParser;
+import ksowka.demo.models.Facebook;
+import ksowka.demo.utils.JsonData;
+import ksowka.demo.utils.NotFoundException;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 @Component
 public class FacebookServiceImpl implements FacebookService {
 
-    private final static String F1 = "/f1.json";
-    private final FilesUtil filesUtil;
-    private final JsonParser jsonParser;
-    private final Gson gson;
+    private final JsonData jsonData;
 
-    public FacebookServiceImpl(FilesUtil filesUtil, JsonParser jsonParser){
-        this.filesUtil = filesUtil;
-        this.jsonParser = jsonParser;
-        this.gson = new Gson();
+    public FacebookServiceImpl(JsonData jsonData){
+        this.jsonData = jsonData;
     }
 
-    public Facebook findById(String id) throws IOException //throws NotFoundException
-    {
-        final File file = filesUtil.load(F1);
-        final String s = file.toString();
-        return jsonParser.toFacebook(s);
+    public Facebook findById(String id) throws IOException, NotFoundException {
+        return jsonData.getData()
+                .stream()
+                .filter(fb -> fb.getId().equals(id))
+                .findFirst()
+                .orElseThrow(IOException::new);
     }
 
     public Map<String, Long> findMostCommonWords() {
+        return jsonData.getData()
+                .stream()
+                .flatMap(fb -> fb.getPosts().stream())
+                .flatMap(posts -> posts.entrySet().stream())
+                .map(Map.Entry::getValue)
+                .flatMap(value -> Arrays.stream(value.split("\\W+")))
+                .collect(groupingBy(Function.identity(), counting()));
 
-        return null;
     }
 
-    public Set<String> findPostIdsByKeyword(String word) {
+    public Set<String> findPostIdsByKeyword(String word) throws IOException {
 
         return null;
+
     }
 
     public Set<Facebook> findAll() {
-        //TODO: parser do wielu jsonow
-        return null;
+        return jsonData.getData()
+                .stream()
+                .collect(Collectors.toSet());
     }
 }

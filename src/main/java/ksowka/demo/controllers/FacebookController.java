@@ -6,13 +6,11 @@ import ksowka.demo.utils.NotFoundException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 
-@RestController("/facebook")
 public class FacebookController {
 
     private final FacebookService facebookService;
@@ -32,7 +30,7 @@ public class FacebookController {
     }
 
     @GetMapping(value = "/posts")
-    public Set<String> findPostIdsByKeyword(@RequestParam String word) {
+    public Set<String> findPostIdsByKeyword(@RequestParam String word) throws IOException {
         return facebookService.findPostIdsByKeyword(word);
     }
 
