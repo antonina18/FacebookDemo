@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +13,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class Facebook {
     private String id;
-    private LocalDate birthday;
+    private Timestamp birthday;
     private String firstname;
     private String lastname;
     private String occupation;
@@ -24,7 +24,7 @@ public class Facebook {
     private String school;
     private String location;
     private String relationship;
-    private Map<Integer, String> posts;
+    private List<Map<String,String>> posts;
 
 }
 
