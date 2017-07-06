@@ -2,7 +2,6 @@ package ksowka.demo.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ksowka.demo.models.Facebook;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 

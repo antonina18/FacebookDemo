@@ -10,8 +10,7 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.*;
 
 @Component
 public class FacebookServiceImpl implements FacebookService {
@@ -27,7 +26,7 @@ public class FacebookServiceImpl implements FacebookService {
                 .stream()
                 .filter(fb -> fb.getId().equals(id))
                 .findFirst()
-                .orElseThrow(IOException::new);
+                .orElseThrow(() -> new NotFoundException("Facebook model with id" + id + " doesn't exist"));
     }
 
     public Map<String, Long> findMostCommonWords() {
@@ -43,8 +42,15 @@ public class FacebookServiceImpl implements FacebookService {
 
     public Set<String> findPostIdsByKeyword(String word) throws IOException {
 
-        return null;
-
+        return jsonData.getData()
+                .stream()
+                .map(Facebook::getPosts)
+                .map(l -> l.stream()
+                            .filter(e -> e.get("message").contains(word))
+                            .map(e -> e.get("id"))
+                            .collect(toList()))
+                .flatMap(Collection::stream)
+                .collect(toSet());
     }
 
     public Set<Facebook> findAll() {

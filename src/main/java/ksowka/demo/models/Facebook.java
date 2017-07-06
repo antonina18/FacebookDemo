@@ -12,6 +12,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 public class Facebook {
+
     private String id;
     private Timestamp birthday;
     private String firstname;

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -17,13 +18,13 @@ public class JsonData {
     private final List<Facebook> data = new ArrayList<>();
 
     @PostConstruct
-    public void init() {
+    public void init() throws URISyntaxException {
         try {
-            data.add(toFacebook(new String(Files.readAllBytes(Paths.get("/f1.json")))));
-            data.add(toFacebook(new String(Files.readAllBytes(Paths.get("/f2.json")))));
-            data.add(toFacebook(new String(Files.readAllBytes(Paths.get("/f3.json")))));
-            data.add(toFacebook(new String(Files.readAllBytes(Paths.get("/f4.json")))));
-            data.add(toFacebook(new String(Files.readAllBytes(Paths.get("/f5.json")))));
+            data.add(toFacebook(new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("f1.json").toURI())))));
+            data.add(toFacebook(new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("f2.json").toURI())))));
+            data.add(toFacebook(new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("f3.json").toURI())))));
+            data.add(toFacebook(new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("f4.json").toURI())))));
+            data.add(toFacebook(new String(Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("f5.json").toURI())))));
         } catch (IOException e) {
             e.printStackTrace();
         }
