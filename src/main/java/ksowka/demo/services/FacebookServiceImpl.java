@@ -17,7 +17,7 @@ public class FacebookServiceImpl implements FacebookService {
 
     private final JsonData jsonData;
 
-    public FacebookServiceImpl(JsonData jsonData){
+    public FacebookServiceImpl(JsonData jsonData) {
         this.jsonData = jsonData;
     }
 
@@ -30,13 +30,24 @@ public class FacebookServiceImpl implements FacebookService {
     }
 
     public Map<String, Long> findMostCommonWords() {
-        return jsonData.getData()
+        final Map<String, Long> wordsCounted = jsonData.getData()
                 .stream()
                 .flatMap(fb -> fb.getPosts().stream())
                 .flatMap(posts -> posts.entrySet().stream())
                 .map(Map.Entry::getValue)
                 .flatMap(value -> Arrays.stream(value.split("\\W+")))
                 .collect(groupingBy(Function.identity(), counting()));
+
+        return wordsCounted.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByValue(Collections.reverseOrder()))
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (e1, e2) -> e1,
+                        LinkedHashMap::new
+                ));
+
 
     }
 
@@ -46,9 +57,9 @@ public class FacebookServiceImpl implements FacebookService {
                 .stream()
                 .map(Facebook::getPosts)
                 .map(l -> l.stream()
-                            .filter(e -> e.get("message").contains(word))
-                            .map(e -> e.get("id"))
-                            .collect(toList()))
+                        .filter(e -> e.get("message").contains(word))
+                        .map(e -> e.get("id"))
+                        .collect(toList()))
                 .flatMap(Collection::stream)
                 .collect(toSet());
     }
